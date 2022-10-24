@@ -64,8 +64,6 @@ print:
 
 	j exit
 
-
-	# TODO: Write your code here
 exit:
 	# TODO: Write code to properly exit a SPIM simulation
 	li $v0 10
