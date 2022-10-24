@@ -210,28 +210,28 @@ doSwap:
         # y-=2; 
         # }
 
-        la $t0 myArray
-        addiu $t1 $t0 4
-        addiu $t2 $t0 44
+        li $t0, 1
+        li $t1, 11
+        la $t2, myArray
+        li $t4, 4
 
-        li $t5 1
-        li $t6 6
+loop:
+        mult $t0, $t4
+        mflo $t3
+        addu $t3, $t3, $t2
+        mult $t1, $t4
+        mflo $t5
+        addu $t5, $t5, $t2
 
-        loop:
-        bge $t5 $t6 loopexit
-        lw $t3 0($t1)
-        lw $t4 0($t2)
-        sw $t4 0($t1)
-        sw $t3 0($t2)
+        lw $t6, 0($t3)
+        lw $t7, 0($t5)
+        sw $t6, 0($t5)
+        sw $t7, 0($t3)
+        addi $t0, $t0, 2
+        addi $t1, $t1, -2
 
-        addiu $t1 $t1 8
-        addiu $t2 $t2 -8
-        addi $t5 $t5 2
-        j loop;
+        li $t7, 6
+        blt $t0, $t7, loop
 
-
-        loopexit:
         # do not remove this last line
-           jr $ra
-
-
+        jr $ra

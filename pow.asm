@@ -16,48 +16,57 @@
 #
 .data
 
-    enter_num: .asciiz "Enter a number x:\n"
-    exp_num: .asciiz "Enter the exponent n:\n"
-    pow: .asciiz "Power(x,n) is:\n"
-	new_line: .asciiz "\n"
+    enterN: .asciiz "Enter a number x:\n"
+    enterE: .asciiz "Enter the exponent n:\n"
+    printP: .asciiz "Power(x,n) is:\n"
+	endl: .asciiz "\n"
 	# TODO: Write your initializations here
 
 #Text Area (i.e. instructions)
 .text
 main:
 	li $v0 4
-	la $a0 enter_num
+	la $a0 enterN
 	syscall
+
 	li $v0 5
 	syscall
 	move $t0 $v0
 
 	li $v0 4
-	la $a0 exp_num
+	la $a0 enterE
 	syscall
+
 	li $v0 5
 	syscall
 	move $t1 $v0
 
-	li $t2 1
-	li $t3 1
+	li $t2, 1
+	li $t3, 1
+
+	j loop
 
 loop:
-	bgt $t3 $t1 exit
-	mult $t0 $t2
+	bgt $t3 $t1 print
+	mult $t2 $t0
 	mflo $t2
-	addi $t3 $t3 1
+	addiu $t3, 1
 	j loop
+
+print:
+	li $v0, 4
+	la $a0, printP
+	syscall
+
+	li $v0, 1
+	move $a0, $t2
+	syscall
+
+	j exit
 
 
 	# TODO: Write your code here
 exit:
 	# TODO: Write code to properly exit a SPIM simulation
-        li $v0 4
-	la $a0 pow
-	syscall 
-	li $v0 1
-    move $a0 $t2
-    syscall
 	li $v0 10
     syscall
